@@ -112,7 +112,7 @@ app.use('/api/auth', auth);
 
 //Redirect all other urls to client(frontend)
 app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "../client", "build", "index.html"));
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
 });
 
 //Configure the port
