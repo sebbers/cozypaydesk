@@ -37,6 +37,7 @@
 
 
 const express = require('express');
+const mongoose = require('mongoose');
 require('colors');
 const dotenv = require('dotenv');
 const cors = require('cors');
