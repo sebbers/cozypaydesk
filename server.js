@@ -61,8 +61,21 @@ if(process.env.NODE_ENV === 'development'){
 }
 
 
+var uristring =
+    process.env.MONGODB_URI ||
+    'mongodb://localhost:27017/cozypaydesk';
+
+mongoose.connect(uristring, {useNewUrlParser: true});
+
+
+const connection = mongoose.connection;
+
+connection.once('open', function () {
+    console.log("MongoDB database connection established successfully");
+})
+
 //Db connection
-connectDb();
+// connectDb();
 
 //Nosql injection
 app.use(sanitize());
