@@ -63,7 +63,7 @@ if(process.env.NODE_ENV === 'development'){
 
 
 var uristring =
-    process.env.MONGODB_URI ||
+    process.env.MONGO_URI ||
     'mongodb://localhost:27017/cozypaydesk';
 
 mongoose.connect(uristring, {useNewUrlParser: true});
