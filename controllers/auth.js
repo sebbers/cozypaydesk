@@ -25,7 +25,7 @@ exports.register = asyncHandlers(async (req, res, next) => {
 
   const token = user.getSignedJwtToken();
 
-  res.status(200).json({success: true, token: token});
+  res.status(200).json({success: true, token: token, user});
 }) 
 
 
@@ -54,7 +54,7 @@ exports.login = asyncHandlers(async (req, res, next) => {
 
  const token = user.getSignedJwtToken();
 
- return res.status(200).json({success: true, token: token});
+ return res.status(200).json({success: true, token: token, user});
 
 }) 
 

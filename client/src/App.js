@@ -1,37 +1,63 @@
-import React from 'react';
-import './App.css';
-import setAuthToken from './utils/setAuthToken';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import PrivateRoute from './components/routing/PrivateRoute'
-import Home from './components/pages/Home'
-import Login from './components/auth/Login'
-import Register from './components/auth/Register'
-import LandingPage from './components/pages/LandingPage'
-import Navbar from './components/partials/Navbar'
-import Alerts from './components/partials/Alerts'
+import React, { useEffect } from 'react';
+import { useRoutes } from 'react-router-dom';
+import { SnackbarProvider } from 'notistack';
+import { ThemeProvider } from '@material-ui/core';
+// import './i18n';
+import GlobalStyles from './components/GlobalStyles';
+// import RTL from './components/RTL';
+import SettingsDrawer from './components/SettingsDrawer';
+import SplashScreen from './components/SplashScreen';
+// import { gtmConfig } from './config';
+import useAuth from './hooks/useAuth';
+import useScrollReset from './hooks/useScrollReset';
+import useSettings from './hooks/useSettings';
+// import gtm from './lib/gtm';
+import routes from './routes';
+import { createTheme } from './theme';
 
+const App = () => {
+  const content = useRoutes(routes);
+  const { settings } = useSettings();
+  const auth = useAuth();
+  useScrollReset();
 
-if(localStorage.token){
-  setAuthToken(localStorage.token);
-}
+  // useEffect(() => {
+  //   gtm.initialize(gtmConfig);
+  // }, []);
 
-function App() {
+  const theme = createTheme({
+    direction: settings.direction,
+    responsiveFontSizes: settings.responsiveFontSizes,
+    roundedCorners: settings.roundedCorners,
+    theme: settings.theme
+  });
+
+  // return (
+  //   <ThemeProvider theme={theme}>
+  //     <RTL direction={settings.direction}>
+  //       <SnackbarProvider
+  //         dense
+  //         maxSnack={3}
+  //       >
+  //         <GlobalStyles />
+  //         <SettingsDrawer />
+  //         {auth.isInitialized ? content : <SplashScreen />}
+  //       </SnackbarProvider>
+  //     </RTL>
+  //   </ThemeProvider>
+  // );
   return (
-    <>
-   <Router>
-     <Navbar />
-     <div className="container">
-     <Alerts />
-      <Switch>
-        <Route exact path='/' component={LandingPage}/>
-        <PrivateRoute exact path='/home' component={Home}/>
-        <Route exact path='/register' component={Register}/>
-        <Route exact path='/login' component={Login}/>
-      </Switch>
-     </div>     
-   </Router>
-   </>
+    <ThemeProvider theme={theme}>
+      <SnackbarProvider
+        dense
+        maxSnack={3}
+      >
+        <GlobalStyles />
+        <SettingsDrawer />
+        {auth.isInitialized ? content : <SplashScreen />}
+      </SnackbarProvider>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
