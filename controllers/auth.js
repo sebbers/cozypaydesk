@@ -23,9 +23,9 @@ exports.register = asyncHandlers(async (req, res, next) => {
     name, email, password, role
   });
 
-  const token = user.getSignedJwtToken();
+  const accessToken = user.getSignedJwtToken();
 
-  res.status(200).json({success: true, token: token, user});
+  res.status(200).json({success: true, accessToken, user});
 }) 
 
 
@@ -52,9 +52,9 @@ exports.login = asyncHandlers(async (req, res, next) => {
     return res.status(404).json({success: false, message: "Invalid Creds.."});
   }
 
- const token = user.getSignedJwtToken();
+ const accessToken = user.getSignedJwtToken();
 
- return res.status(200).json({success: true, token: token, user});
+ return res.status(200).json({success: true, accessToken, user});
 
 }) 
 

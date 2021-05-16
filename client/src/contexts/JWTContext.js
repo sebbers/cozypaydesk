@@ -120,7 +120,8 @@ export const AuthProvider = (props) => {
       password
     });
     const { accessToken, user } = response.data;
-
+    console.log({ accessToken, user })
+    debugger
     setSession(accessToken);
     dispatch({
       type: 'LOGIN',
