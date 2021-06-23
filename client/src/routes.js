@@ -53,6 +53,7 @@ const Calendar = Loadable(lazy(() => import('./pages/dashboard/Calendar')));
 const Chat = Loadable(lazy(() => import('./pages/dashboard/Chat')));
 const CustomerDetails = Loadable(lazy(() => import('./pages/dashboard/CustomerDetails')));
 const CustomerEdit = Loadable(lazy(() => import('./pages/dashboard/CustomerEdit')));
+const CustomerAdd = Loadable(lazy(() => import('./pages/dashboard/CustomerAdd')));
 const CustomerList = Loadable(lazy(() => import('./pages/dashboard/CustomerList')));
 const Finance = Loadable(lazy(() => import('./pages/dashboard/Finance')));
 const InvoiceDetails = Loadable(lazy(() => import('./pages/dashboard/InvoiceDetails')));
@@ -204,6 +205,10 @@ const routes = [
           {
             path: '/',
             element: <CustomerList />
+          },
+          {
+            path: '/add',
+            element: <CustomerAdd />
           },
           {
             path: ':customerId',

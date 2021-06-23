@@ -1,5 +1,5 @@
 /* eslint-disable no-bitwise */
-export const JWT_SECRET = 'devias-top-secret-key';
+export const JWT_SECRET = 'secret';
 export const JWT_EXPIRES_IN = 3600 * 24 * 2; // 2 days
 
 // Since we are unable to sign a JWT in a browser
@@ -7,6 +7,7 @@ export const JWT_EXPIRES_IN = 3600 * 24 * 2; // 2 days
 // we simply simulate a signed token, no complex checks because on server side
 // you're using the library
 export const sign = (payload, privateKey, header) => {
+  debugger
   const now = new Date();
   header.expiresIn = new Date(now.getTime() + header.expiresIn);
   const encodedHeader = btoa(JSON.stringify(header));
@@ -23,6 +24,7 @@ export const sign = (payload, privateKey, header) => {
 // Since we create a fake signed token, we have to implement a fake jwt decode
 // platform to simulate "jwt-decode" library.
 export const decode = (token) => {
+  debugger
   const [encodedHeader, encodedPayload, signature] = token.split('.');
   const header = JSON.parse(atob(encodedHeader));
   const payload = JSON.parse(atob(encodedPayload));
@@ -46,6 +48,7 @@ export const decode = (token) => {
 };
 
 export const verify = (token, privateKey) => {
+  debugger
   const [encodedHeader, encodedPayload, signature] = token.split('.');
   const header = JSON.parse(atob(encodedHeader));
   const payload = JSON.parse(atob(encodedPayload));

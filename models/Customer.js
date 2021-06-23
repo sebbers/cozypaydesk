@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { ObjectId } = require('mongodb');
 
 const customerSchema = mongoose.Schema({
   userId: { type: ObjectId, ref: 'User', index: true, require: true, },

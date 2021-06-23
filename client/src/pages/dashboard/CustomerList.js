@@ -9,6 +9,7 @@ import DownloadIcon from '../../icons/Download';
 import PlusIcon from '../../icons/Plus';
 import UploadIcon from '../../icons/Upload';
 import useSettings from '../../hooks/useSettings';
+import useCustomer from '../../hooks/useCustomer';
 import gtm from '../../lib/gtm';
 import axios from 'axios';
 
@@ -17,16 +18,18 @@ const CustomerList = () => {
   const { settings } = useSettings();
   const [customers, setCustomers] = useState([]);
 
-  useEffect(() => {
-    gtm.push({ event: 'page_view' });
-  }, []);
+  // useEffect(() => {
+  //   gtm.push({ event: 'page_view' });
+  // }, []);
 
   const getCustomers = useCallback(async () => {
     try {
-      const response = await axios.get('/api/customers');
+      const response = await axios.get('/api/customer');
 
       if (isMountedRef.current) {
-        setCustomers(response.data.customers);
+        debugger
+        // setCustomers(response.data.customers);
+        setCustomers(response.data.data);
       }
     } catch (err) {
       console.error(err);
@@ -115,10 +118,22 @@ const CustomerList = () => {
             </Grid>
             <Grid item>
               <Box sx={{ m: -1 }}>
-                <Button
+                {/* <Button
                   color="primary"
                   startIcon={<PlusIcon fontSize="small" />}
                   sx={{ m: 1 }}
+                  variant="contained"
+                >
+                  Add Customer
+                </Button> */}
+                <Button
+                  color="primary"
+                  component={RouterLink}
+                  // fullWidth
+                  // sx={{ mt: 2 }}
+                  startIcon={<PlusIcon fontSize="small" />}
+                  sx={{ m: 1 }}
+                  to="/dashboard/customers/add"
                   variant="contained"
                 >
                   Add Customer

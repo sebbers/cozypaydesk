@@ -53,7 +53,7 @@ exports.login = asyncHandlers(async (req, res, next) => {
   }
 
  const accessToken = user.getSignedJwtToken();
-
+  // console.log({success: true, accessToken, user})
  return res.status(200).json({success: true, accessToken, user});
 
 }) 
@@ -63,5 +63,5 @@ exports.login = asyncHandlers(async (req, res, next) => {
 // @Desc  : Get the user on load if token available in browser
 exports.getMe = asyncHandlers(async (req, res, next) => {
   const user = await User.findById(req.user.id);
-  return res.status(200).json({success: true, data: user});
+  return res.status(200).json({success: true, user});
 })

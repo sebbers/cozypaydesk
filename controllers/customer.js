@@ -1,18 +1,65 @@
+const { ObjectId } = require('mongodb');
+const Customer = require('../models/Customer');
 const User = require('../models/User');
+const asyncHandlers = require('../middleware/async');
+
+// @Method: POST
+// @Route : api/auth/register 
+// @Desc  : Handling the user registration
+exports.create = asyncHandlers(async (req, res, next) => {
+
+  const { firstName, lastName, email } = req.body;
+  const { user } = req;
+  console.log('USER')
+  console.log(user)
+  
+  if(!email || !firstName || !lastName){
+    return res.status(400).json({success: false, message: "Please enter all the fields."});
+  }
+  
+  let customer = await Customer.findOne({ email, userId: ObjectId(user.id) });
+  
+  if(customer){
+    return res.status(400).json({success: false, message: 'Customer already exists'});
+  }
+
+  customer = await Customer.create({
+    firstName, lastName, email, userId: ObjectId(user.id)
+  });
+
+  // const accessToken = user.getSignedJwtToken();
+
+  // res.status(200).json({success: true, accessToken, user});
+
+  res.status(200).json({success: true, customer});
+}) 
 
 exports.list = async (req, res) => {
   try {
+
+    // let page = 1;
+    // let skip = 0;
+    // let limit = 25;
+    // let search = '';
+    // let orderBy = 'name';
+    // let orderDirection = -1;
+    // ({ page, skip, limit, search, orderBy, orderDirection } = req.query);
+
+    // console.log({ page, skip, limit, search, orderBy, orderDirection })
     const {
-      page,
-      skip,
-      limit,
-      search,
-      orderBy,
+      page = 1,
+      skip = 0,
+      limit = 25,
+      search = '',
+      orderBy = 'name',
+      orderDirection = -1
     } = req.query;
 
-    const { orderDirection } = req.query;
+    // const { orderDirection } = req.query;
 
-    let match = {};
+    let match = {
+      userId: ObjectId(req.user.id)
+    };
     let searchOr = {};
     const sort = {};
 
@@ -24,7 +71,7 @@ exports.list = async (req, res) => {
           { email: { $regex: search, $options: 'i' } },
         ],
       };
-      match = searchOr;
+      match = { ...match, searchOr };
     }
     
     if (orderBy && orderDirection) {
@@ -57,7 +104,7 @@ exports.list = async (req, res) => {
       { $limit: parseInt(limit) },
     ]);
 
-    const total = await User.count({});
+    const total = await User.count(match);
 
     return res.status(200).json({
       data,

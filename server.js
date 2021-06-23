@@ -7,6 +7,7 @@ const morgan = require('morgan');
 const path = require('path');
 // const connectDb = require('./config/db');
 const auth = require('./routes/auth');
+const customer = require('./routes/customer');
 const sanitize = require('express-mongo-sanitize')
 const helmet = require('helmet');
 const xss = require('xss-clean');
@@ -60,6 +61,7 @@ app.use(express.static(path.join(__dirname, 'static')));
 
 //Routing
 app.use('/api/auth', auth);
+app.use('/api/customer', customer);
 
 //Redirect all other urls to client(frontend)
 if (process.env.NODE_ENV === 'production') {
