@@ -49,6 +49,7 @@ const RegisterJWT = (props) => {
         })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
+          debugger
           await register(values.email, values.name, values.password);
 
           if (isMountedRef.current) {

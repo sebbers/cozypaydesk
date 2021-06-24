@@ -2,6 +2,7 @@ import { LOGIN_SUCCESS, LOGIN_FAIL, REGISTER_FAIL, REGISTER_SUCCESS} from "../ty
 import axios from 'axios';
 
 export const register = user => {
+    debugger
     return async (dispatch) => { 
          const config = {header: {'Content-Type': 'application/json'}}  
         try {

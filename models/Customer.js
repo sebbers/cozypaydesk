@@ -3,14 +3,19 @@ const { ObjectId } = require('mongodb');
 
 const customerSchema = mongoose.Schema({
   userId: { type: ObjectId, ref: 'User', index: true, require: true, },
-  firstName: {
-    type: String,
-    require: [true, "Please add a first name"]
-  },
+  // firstName: {
+  //   type: String,
+  //   require: [true, "Please add a first name"]
+  // },
 
-  lastName: {
+  // lastName: {
+  //   type: String,
+  //   require: [true, "Please add a last name"]
+  // },
+
+  name: {
     type: String,
-    require: [true, "Please add a last name"]
+    require: [true, "Please add a name"]
   },
 
   company: { type: String },

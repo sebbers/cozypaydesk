@@ -7,6 +7,7 @@ import { Provider }from 'react-redux'
 import rootReducers from './redux/_reducers'
 import thunk from 'redux-thunk'
 import { AuthProvider } from './contexts/JWTContext';
+import { CustomerProvider } from './contexts/CustomerContext';
 import { SettingsProvider } from './contexts/SettingsContext';
 import { HelmetProvider } from 'react-helmet-async';
 import store from './store';
@@ -24,7 +25,9 @@ ReactDOM.render(
           <SettingsProvider>
             <BrowserRouter>
               <AuthProvider>
-                <App />
+                <CustomerProvider>
+                  <App />
+                </CustomerProvider>
               </AuthProvider>
             </BrowserRouter>
           </SettingsProvider>

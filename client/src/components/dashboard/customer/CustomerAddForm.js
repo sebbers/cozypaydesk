@@ -5,10 +5,12 @@ import { Formik } from 'formik';
 import { useSnackbar } from 'notistack';
 import { Box, Button, Card, Grid, Switch, TextField, Typography } from '@material-ui/core';
 import wait from '../../../utils/wait';
+import useCustomer from '../../../hooks/useCustomer';
 
 const CustomerAddForm = (props) => {
   const { ...other } = props || {};
   const { enqueueSnackbar } = useSnackbar();
+  const { create } = useCustomer();
 
   return (
     <Formik
@@ -16,10 +18,10 @@ const CustomerAddForm = (props) => {
         address1: '',
         address2: '',
         country: '',
-        email: '',
+        email: 'user@gmail.com',
         hasDiscountedPrices: false,
         isVerified: false,
-        name: '',
+        name: 'user 1',
         phone: '',
         state: '',
         submit: null
@@ -47,17 +49,20 @@ const CustomerAddForm = (props) => {
       onSubmit={async (values, { resetForm, setErrors, setStatus, setSubmitting }) => {
         try {
           // NOTE: Make API request
-          await wait(500);
-          resetForm();
-          setStatus({ success: true });
-          setSubmitting(false);
-          enqueueSnackbar('Customer updated', {
-            anchorOrigin: {
-              horizontal: 'right',
-              vertical: 'top'
-            },
-            variant: 'success'
-          });
+          debugger
+          await create(values);
+          // debugger
+          // await wait(500);
+          // resetForm();
+          // setStatus({ success: true });
+          // setSubmitting(false);
+          // enqueueSnackbar('Customer updated', {
+          //   anchorOrigin: {
+          //     horizontal: 'right',
+          //     vertical: 'top'
+          //   },
+          //   variant: 'success'
+          // });
         } catch (err) {
           console.error(err);
           setStatus({ success: false });
@@ -276,7 +281,7 @@ const CustomerAddForm = (props) => {
 
 CustomerAddForm.propTypes = {
   // @ts-ignore
-  customer: PropTypes.object.isRequired
+  // customer: PropTypes.object.isRequired
 };
 
 export default CustomerAddForm;

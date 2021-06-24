@@ -8,12 +8,14 @@ const asyncHandlers = require('../middleware/async');
 // @Desc  : Handling the user registration
 exports.create = asyncHandlers(async (req, res, next) => {
 
-  const { firstName, lastName, email } = req.body;
+  // const { firstName, lastName, email } = req.body;
+  const { name, email } = req.body;
   const { user } = req;
   console.log('USER')
   console.log(user)
   
-  if(!email || !firstName || !lastName){
+  // if(!email || !firstName || !lastName){
+    if(!email || !name){
     return res.status(400).json({success: false, message: "Please enter all the fields."});
   }
   
@@ -24,7 +26,10 @@ exports.create = asyncHandlers(async (req, res, next) => {
   }
 
   customer = await Customer.create({
-    firstName, lastName, email, userId: ObjectId(user.id)
+    // firstName, lastName, email, userId: ObjectId(user.id)
+    name, 
+    email, 
+    userId: ObjectId(user.id)
   });
 
   // const accessToken = user.getSignedJwtToken();
@@ -88,17 +93,20 @@ exports.list = async (req, res) => {
       }
     }
 
-    const data = await User.aggregate([
+    console.log('match')
+    console.log(match)
+
+    const data = await Customer.aggregate([
       { $match: match },
-      {
-        $lookup: {
-          from: 'invoice',
-          localField: '_id',
-          foreignField: 'userId',
-          as: 'user_invoice',
-        },
-      },
-      { $addFields: { money_spent: { $sum: '$user_invoice.amountPaid' } } },
+      // {
+      //   $lookup: {
+      //     from: 'invoice',
+      //     localField: '_id',
+      //     foreignField: 'userId',
+      //     as: 'user_invoice',
+      //   },
+      // },
+      // { $addFields: { money_spent: { $sum: '$user_invoice.amountPaid' } } },
       { $sort: sort },
       { $skip: parseInt(skip) },
       { $limit: parseInt(limit) },

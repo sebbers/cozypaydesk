@@ -33,6 +33,7 @@ const Register = ({history}) => {
   const onChange = (e) => setNewUser({...newUser, [e.target.name]: e.target.value});
 
   const onSubmit = e => {
+    debugger
     e.preventDefault();
     if(name === '' || email === '' || password === '')
       dispatch(setAlert('Please enter all the fields.', 'danger'));

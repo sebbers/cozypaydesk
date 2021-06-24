@@ -27,7 +27,6 @@ const CustomerList = () => {
       const response = await axios.get('/api/customer');
 
       if (isMountedRef.current) {
-        debugger
         // setCustomers(response.data.customers);
         setCustomers(response.data.data);
       }

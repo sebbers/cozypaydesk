@@ -76,48 +76,49 @@ export const CustomerProvider = (props) => {
   const { children } = props;
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  useEffect(() => {
-    const initialize = async () => {
-      try {
-        const accessToken = window.localStorage.getItem('accessToken');
+  // useEffect(() => {
+  //   const initialize = async () => {
+  //     try {
+  //       const accessToken = window.localStorage.getItem('accessToken');
+  //       debugger
+  //       if (accessToken && verify(accessToken, JWT_SECRET)) {
+  //         // setSession(accessToken);
 
-        if (accessToken && verify(accessToken, JWT_SECRET)) {
-          // setSession(accessToken);
+  //         const response = await axios.get('/api/customers');
+  //         const { customers } = response.data;
 
-          const response = await axios.get('/api/customers');
-          const { customers } = response.data;
+  //         dispatch({
+  //           type: 'INITIALIZE',
+  //           payload: {
+  //             customers
+  //           }
+  //         });
+  //       } else {
+  //         dispatch({
+  //           type: 'INITIALIZE',
+  //           payload: {
+  //             // isAuthenticated: false,
+  //             // user: null
+  //             customers: []
+  //           }
+  //         });
+  //       }
+  //     } catch (err) {
+  //       debugger
+  //       console.error(err);
+  //       dispatch({
+  //         type: 'INITIALIZE',
+  //         payload: {
+  //           // isAuthenticated: false,
+  //           // user: null
+  //           customers: []
+  //         }
+  //       });
+  //     }
+  //   };
 
-          dispatch({
-            type: 'INITIALIZE',
-            payload: {
-              customers
-            }
-          });
-        } else {
-          dispatch({
-            type: 'INITIALIZE',
-            payload: {
-              // isAuthenticated: false,
-              // user: null
-              customers: []
-            }
-          });
-        }
-      } catch (err) {
-        console.error(err);
-        dispatch({
-          type: 'INITIALIZE',
-          payload: {
-            // isAuthenticated: false,
-            // user: null
-            customers: []
-          }
-        });
-      }
-    };
-
-    initialize();
-  }, []);
+  //   initialize();
+  // }, []);
 
   // const login = async (email, password) => {
   //   const response = await axios.post('/api/auth/login', {
@@ -141,13 +142,23 @@ export const CustomerProvider = (props) => {
   //   dispatch({ type: 'LOGOUT' });
   // };
 
-  const create = async (firstName, lastName, email) => {
-    
+  const create = async (values) => {
+    const {
+      // firstName,
+      // lastName,
+      name,
+      email
+    } = values;
+    console.log(values)
+    debugger
+
     const response = await axios.post('/api/customer', {
-      firstName,
-      lastName,
+      // firstName,
+      // lastName,
+      name,
       email
     });
+    debugger
     const { customer } = response.data;
     // debugger
     // window.localStorage.setItem('accessToken', accessToken);
