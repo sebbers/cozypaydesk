@@ -1,5 +1,41 @@
 const User = require('../models/User');
 
+// @Method: POST
+// @Route : api/auth/register 
+// @Desc  : Handling the user registration
+exports.create = asyncHandlers(async (req, res, next) => {
+
+  // const { firstName, lastName, email } = req.body;
+  const { name, email } = req.body;
+  const { user } = req;
+  console.log('USER')
+  console.log(user)
+  
+  // if(!email || !firstName || !lastName){
+    if(!email || !name){
+    return res.status(400).json({success: false, message: "Please enter all the fields."});
+  }
+  
+  let customer = await Customer.findOne({ email, userId: ObjectId(user.id) });
+  
+  if(customer){
+    return res.status(400).json({success: false, message: 'Customer already exists'});
+  }
+
+  customer = await Customer.create({
+    // firstName, lastName, email, userId: ObjectId(user.id)
+    name, 
+    email, 
+    userId: ObjectId(user.id)
+  });
+
+  // const accessToken = user.getSignedJwtToken();
+
+  // res.status(200).json({success: true, accessToken, user});
+
+  res.status(200).json({success: true, customer});
+}) 
+
 exports.list = async (req, res) => {
   try {
     const {

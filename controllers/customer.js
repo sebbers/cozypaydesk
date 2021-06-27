@@ -71,8 +71,9 @@ exports.list = async (req, res) => {
     if (search) {
       searchOr = {
         $or: [
-          { firstname: { $regex: search, $options: 'i' } },
-          { lastname: { $regex: search, $options: 'i' } },
+          // { firstname: { $regex: search, $options: 'i' } },
+          // { lastname: { $regex: search, $options: 'i' } },
+          { name: { $regex: search, $options: 'i' } },
           { email: { $regex: search, $options: 'i' } },
         ],
       };
@@ -81,8 +82,9 @@ exports.list = async (req, res) => {
     
     if (orderBy && orderDirection) {
       if (orderBy === 'name') {
-        sort.firstname = parseInt(orderDirection);
-        sort.lastname = parseInt(orderDirection);
+        // sort.firstname = parseInt(orderDirection);
+        // sort.lastname = parseInt(orderDirection);
+        sort.name = parseInt(orderDirection);
         sort.email = parseInt(orderDirection);
       } else if (orderBy === 'money_spent') {
         sort.money_spent = parseInt(orderDirection);

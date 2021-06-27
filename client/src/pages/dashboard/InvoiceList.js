@@ -119,8 +119,12 @@ const InvoiceList = () => {
               <Box sx={{ m: -1 }}>
                 <Button
                   color="primary"
+                  component={RouterLink}
+                  // fullWidth
+                  // sx={{ mt: 2 }}
                   startIcon={<PlusIcon fontSize="small" />}
                   sx={{ m: 1 }}
+                  to="/dashboard/invoices/create"
                   variant="contained"
                 >
                   New Invoice

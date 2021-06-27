@@ -58,6 +58,7 @@ const CustomerList = Loadable(lazy(() => import('./pages/dashboard/CustomerList'
 const Finance = Loadable(lazy(() => import('./pages/dashboard/Finance')));
 const InvoiceDetails = Loadable(lazy(() => import('./pages/dashboard/InvoiceDetails')));
 const InvoiceList = Loadable(lazy(() => import('./pages/dashboard/InvoiceList')));
+const InvoiceAdd = Loadable(lazy(() => import('./pages/dashboard/InvoiceAdd')));
 const Kanban = Loadable(lazy(() => import('./pages/dashboard/Kanban')));
 const Mail = Loadable(lazy(() => import('./pages/dashboard/Mail')));
 const OrderDetails = Loadable(lazy(() => import('./pages/dashboard/OrderDetails')));
@@ -226,6 +227,10 @@ const routes = [
           {
             path: '/',
             element: <InvoiceList />
+          },
+          {
+            path: '/create',
+            element: <InvoiceAdd />
           },
           {
             path: ':invoiceId',
