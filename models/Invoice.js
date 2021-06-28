@@ -20,10 +20,10 @@ const InvoiceSchema = new Schema({
   stripePaymentIntentId: String
 });
 
-// Return the ride amount for the pilot after collecting 20% platform fees.
-// InvoiceSchema.methods.amountForPilot = function() {
-//   return parseInt(this.amount * 0.8);
-// };
+// Return the ride amount for the user after collecting 20% platform fees.
+InvoiceSchema.methods.amountForUser = function() {
+  return parseInt(this.amount * 0.8);
+};
 
 const Invoice = mongoose.model('Invoice', InvoiceSchema);
 
